@@ -38,7 +38,7 @@ public class HomePageScooter {
 
 
     //Ожидание загрузки гл.страницы, принятие куки, скрол до вопросов
-    public void loadingPageOnQuestions() {
+    public void loadPageOnQuestions() {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className(pageTitle)));
         driver.findElement(By.id(acceptCookies)).click();//Принять куки

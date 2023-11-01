@@ -34,6 +34,7 @@ public class OrderPage {
     public final String enterMetro = ".//input[@class='select-search__input']";//локатор для внесения Метро
     public final String enterPhone = ".//div/div[2]/div[2]/div[5]/input";//локатор для внесения телефона
     public final String further = ".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']";//локатор кнопки Далее
+    public final String whoIsTheScooterFor = ".//div[@class='Order_Header__BZXOb' and text()='Для кого самокат']" ;//форма заказа Для кого самокат
     private final WebDriver driver;
     private WebElement element;
 
@@ -49,22 +50,25 @@ public class OrderPage {
 
     //Метод первой кнопки Заказать
     public void setFirstOrderButton() {
+        loadingHomePage();
         driver.findElement(By.xpath(firstOrderButton)).click();
     }
 
-    //Загрузка страницы
+    //Загрузка страницы и принятие куки
     public void loadingHomePage() {
         new WebDriverWait(driver, 3)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.className(pageTitle)));
         driver.findElement(By.id(acceptCookies)).click();//Принять куки
     }
 
-    //Проскролить до Второй кнопки Заказать и кликнуть
-    public void setSecondOrderButton() {
+    //Проскролить до Второй кнопки Заказать, кликнуть, получить текст формы
+    public String setSecondOrderButton() {
         loadingHomePage();
         element = driver.findElement(By.xpath(secondOrderButton));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);//проскролить до второй кнопки
-        driver.findElement(By.xpath(secondOrderButton)).click();//кликнуть на втрой кнопке заказа
+        driver.findElement(By.xpath(secondOrderButton)).click();//кликнуть на второй кнопке заказа
+        wait(whoIsTheScooterFor);
+        return driver.findElement(By.xpath(whoIsTheScooterFor)).getText();//получить текст Для кого самокат
     }
 
     //ожидание прогрузки

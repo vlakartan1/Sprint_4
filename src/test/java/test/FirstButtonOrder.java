@@ -3,57 +3,69 @@ package test;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.openqa.selenium.WebDriver;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import pageobject.OrderPage;
 
+@RunWith(Parameterized.class)
 public class FirstButtonOrder {
-    private static final String nameOne = "Андрей";
-    private static final String lastNameOne = "Иванов";
-    private static final String adressOne = "Москва, ул.Новослободская, д.15, кв.3";
-    private static final String metroOne = "Черкизовская";
-    private static final String phoneOne = "+79220227222";
-    private static final String nameTwo = "Иван";
-    private static final String lastNameTwo = "Сидоров";
-    private static final String adressTwo = "Балашиха, ул.Флерова, д.77, кв.53";
-    private static final String metroTwo = "Новогиреево";
-    private static final String phoneTwo = "+79183227183";
-    private static final String date = "05.11.2023";
-    private static final String comment = "Позвонить за час";
-    private static final String textOrderIsProcessed = "Заказ оформлен";
+    private static final String NAME_ONE = "Андрей";
+    private static final String LAST_NAME_ONE = "Иванов";
+    private static final String ADRESS_ONE = "Москва, ул.Новослободская, д.15, кв.3";
+    private static final String METRO_ONE = "Черкизовская";
+    private static final String PHONE_ONE = "+79220227222";
+    private static final String NAME_TWO = "Иван";
+    private static final String LAST_NAME_TWO = "Сидоров";
+    private static final String ADRESS_TWO = "Балашиха, ул.Флерова, д.77, кв.53";
+    private static final String METRO_TWO = "Новогиреево";
+    private static final String PHONE_TWO = "+79183227183";
+    private static final String DATE = "05.11.2023";
+    private static final String COMMENT = "Позвонить за час";
+    private static final String TEXT_ORDER_IS_PROCESSED = "Заказ оформлен";
 
     private WebDriver driver;
 
+    private final String name;
+    private final String lastName;
+    private final String address;
+    private final String metro;
+    private final String phone;
+
+    public FirstButtonOrder(String name, String lastName, String address, String metro, String phone) {
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+        this.metro = metro;
+        this.phone = phone;
+    }
+
+    @Parameterized.Parameters
+    public static Object[][] getSecondDataSet() {
+        return new Object[][]{
+                {NAME_TWO, LAST_NAME_TWO, ADRESS_TWO, METRO_TWO, PHONE_TWO},
+                {NAME_ONE, LAST_NAME_ONE, ADRESS_ONE, METRO_ONE, PHONE_ONE}
+        };
+    }
 
     @Test
-    public void registeAndOrderAScooter() {
+    public void registerAndOrderAScooter() {
         OrderPage orderPage = new OrderPage(driver);
-        orderPage.loadingHomePage();//загрузка страницы и принятие куки
-        orderPage.setFirstOrderButton();//Нажать первую кнопку Заказать
-        orderPage.fillInTheForm(nameOne, lastNameOne, adressOne, metroOne, phoneOne);//внести данные и нажать далее
-        String result = orderPage.rentalForm(date, orderPage.fourDays, orderPage.blackPearl, comment);//внести данные по аренде и подтвердить заказ
-        Assert.assertTrue("Не получилось оформить заказ", result.startsWith(textOrderIsProcessed));
-        //Второй заказ
-        orderPage.makeASecondOrder();//Нажать Проверить статус, перейти на главную страницу
-        orderPage.setFirstOrderButton();//Нажать первую кнопку Заказать
-        orderPage.fillInTheForm(nameTwo, lastNameTwo, adressTwo, metroTwo, phoneTwo);//внести данные и нажать далее
-        result = orderPage.rentalForm(date, orderPage.threeDays, orderPage.grey, comment);//внести данные по аренде и подтвердить заказ
-        Assert.assertTrue("Не получилось оформить заказ", result.startsWith(textOrderIsProcessed));
+        orderPage.setFirstOrderButton();
+        orderPage.fillInTheForm(name, lastName, address, metro, phone);
+        String result = orderPage.rentalForm(DATE, orderPage.fourDays, orderPage.blackPearl, COMMENT);
+        Assert.assertTrue("Не получилось оформить заказ", result.startsWith(TEXT_ORDER_IS_PROCESSED));
     }
 
     @Before
     public void setup() {
-        System.setProperty("webdriver.gecko.driver", "D:\\WebDriver\\bin\\geckodriver.exe");
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
         driver = new FirefoxDriver(options);
         driver.get("https://qa-scooter.praktikum-services.ru/");
-        //ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        //driver = new ChromeDriver(options);
-        //driver.get("https://qa-scooter.praktikum-services.ru/");
     }
 
     @After
