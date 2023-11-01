@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import pageobject.OrderPage;
 
-public class SecondButtonOrder {
+public class LowerButtonOrder {
     private static final String TEXT_NAME_FORM = "Для кого самокат";
 
     private WebDriver driver;
@@ -18,7 +18,7 @@ public class SecondButtonOrder {
     @Test
     public void registeAndOrderAScooter() {
         OrderPage orderPage = new OrderPage(driver);
-        String result = orderPage.setSecondOrderButton();//Нажать вторую кнопку Заказать
+        String result = orderPage.setLowerOrderButton();//Нажать вторую кнопку Заказать
         System.out.println(result);
         Assert.assertTrue("Не открылась форма заказа", result.startsWith(TEXT_NAME_FORM));
     }

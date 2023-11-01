@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import pageobject.HomePageScooter;
 
 @RunWith(Parameterized.class)
-public class getListOfQuestionsAboutImportant {
+public class GetListOfQuestionsAboutImportant {
     private static WebDriver driver;
     private static final String PRICE_AND_PAYMENT_TERMS = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";//ответ Сколько это стоит? И как оплатить?
     private static final String SEVERA_SCOOTERS = "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.";
@@ -28,7 +28,7 @@ public class getListOfQuestionsAboutImportant {
     private final String answer;
     private final String result;
 
-    public getListOfQuestionsAboutImportant(String question, String result, String answer) {
+    public GetListOfQuestionsAboutImportant(String question, String result, String answer) {
         this.question = question;
         this.result = result;
         this.answer = answer;

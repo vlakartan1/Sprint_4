@@ -48,8 +48,8 @@ public class OrderPage {
         driver.findElement(By.className(pageTitle)).click();
     }
 
-    //Метод первой кнопки Заказать
-    public void setFirstOrderButton() {
+    //Метод верхней кнопки Заказать
+    public void setUpperOrderButton() {
         loadingHomePage();
         driver.findElement(By.xpath(firstOrderButton)).click();
     }
@@ -61,12 +61,12 @@ public class OrderPage {
         driver.findElement(By.id(acceptCookies)).click();//Принять куки
     }
 
-    //Проскролить до Второй кнопки Заказать, кликнуть, получить текст формы
-    public String setSecondOrderButton() {
+    //Проскролить до нижней кнопки Заказать, кликнуть, получить текст формы
+    public String setLowerOrderButton() {
         loadingHomePage();
         element = driver.findElement(By.xpath(secondOrderButton));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);//проскролить до второй кнопки
-        driver.findElement(By.xpath(secondOrderButton)).click();//кликнуть на второй кнопке заказа
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);//проскролить до нижней кнопки
+        driver.findElement(By.xpath(secondOrderButton)).click();//кликнуть на нажней кнопке заказа
         wait(whoIsTheScooterFor);
         return driver.findElement(By.xpath(whoIsTheScooterFor)).getText();//получить текст Для кого самокат
     }

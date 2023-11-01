@@ -12,7 +12,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import pageobject.OrderPage;
 
 @RunWith(Parameterized.class)
-public class FirstButtonOrder {
+public class UpperButtonOrder {
     private static final String NAME_ONE = "Андрей";
     private static final String LAST_NAME_ONE = "Иванов";
     private static final String ADRESS_ONE = "Москва, ул.Новослободская, д.15, кв.3";
@@ -35,7 +35,7 @@ public class FirstButtonOrder {
     private final String metro;
     private final String phone;
 
-    public FirstButtonOrder(String name, String lastName, String address, String metro, String phone) {
+    public UpperButtonOrder(String name, String lastName, String address, String metro, String phone) {
         this.name = name;
         this.lastName = lastName;
         this.address = address;
@@ -54,7 +54,7 @@ public class FirstButtonOrder {
     @Test
     public void registerAndOrderAScooter() {
         OrderPage orderPage = new OrderPage(driver);
-        orderPage.setFirstOrderButton();
+        orderPage.setUpperOrderButton();
         orderPage.fillInTheForm(name, lastName, address, metro, phone);
         String result = orderPage.rentalForm(DATE, orderPage.fourDays, orderPage.blackPearl, COMMENT);
         Assert.assertTrue("Не получилось оформить заказ", result.startsWith(TEXT_ORDER_IS_PROCESSED));
